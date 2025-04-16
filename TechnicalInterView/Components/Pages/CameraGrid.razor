@@ -1,0 +1,23 @@
+﻿<!-- Components/Pages/CameraGrid.razor -->
+@rendermode InteractiveServer
+@using Microsoft.AspNetCore.SignalR.Client
+@inject ICameraDataService CameraDataService
+@inject ICustomLogger Logger
+@inject HubConnection HubConnection
+
+<div class="container mt-4">
+    <!-- Implement search input and camera table (Name, UseCase, Status, Save) -->
+</div>
+
+@code {
+    [Parameter]
+    public string TenantId { get; set; } = string.Empty;
+
+    // Add logic for:
+    // - Loading cameras by TenantId
+    // - Filtering cameras by name (search)
+    // - Updating status via SignalR with reconnect handling
+    // - Saving use case changes
+    // - Error handling (no cameras, SignalR errors)
+    // - Dispose
+}
