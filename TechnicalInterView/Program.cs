@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
+using TechnicalInterView.Cameras.Models;
 using TechnicalInterView.Components;
+using TechnicalInterView.Services;
 using VideoAnalytics.Hubs;
 using VideoAnalytics.Services;
 
@@ -20,6 +22,14 @@ builder.Services.AddScoped<HubConnection>(sp =>
         .WithAutomaticReconnect()
         .Build();
 });
+//
+// Declare a Scoped Service for Data Cache
+//
+builder.Services.AddScoped<ICameraDataCache, CameraDataCache>();
+//
+// Rather than use cascading parameters, we can use a filter object instance
+// scoped per user connection to the Asp.Net server
+builder.Services.AddScoped<CameraQueryFilter>();
 
 builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 

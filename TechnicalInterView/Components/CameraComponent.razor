@@ -1,0 +1,54 @@
+﻿@using TechnicalInterView.Cameras.Models
+
+@if (asTableRow)
+{
+    <tr>
+        <td>@CameraModel.Name</td>
+        <td>@CameraModel.UseCase?string.Empty</td>
+        <td>
+            <button type="button" class="@GetStatusClass()">
+            @CameraModel.Status
+            </button>
+        </td>
+        <td>
+            <button type="submit">
+            Action
+            </button>
+        </td>
+    </tr>
+}
+else
+{
+    <div class="="d-flex justify-content-evenly">
+        @CameraModel.CameraId
+        @CameraModel.TenantId
+        @CameraModel.Name
+        @CameraModel.UseCase
+        <button type="button" class="@GetStatusClass()">
+            @CameraModel.Status
+        </button>
+    </div>
+
+}
+
+@code {
+[Parameter]
+public string? ParamCameraId { get; set; } = null!;
+
+public CameraModel CameraModel = new CameraModel();
+
+public bool asTableRow = true;
+
+#region Css
+public string GetStatusClass()
+{
+    return CameraModel.Status switch
+    {
+        "Online" => "btn btn-success",
+        "Offline" => "btn btn-danger",
+        _ => "btn btn-secondary"
+    };
+}
+
+#endregion Css
+}
