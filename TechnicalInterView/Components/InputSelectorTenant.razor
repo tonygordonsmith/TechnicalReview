@@ -1,0 +1,28 @@
+﻿@using TechnicalInterView.Tenants.Models
+<InputSelect @bind-Value="SelectedTenantId" class="form-select" @onchange="HandleChange">
+    <option value="">-- Select Tenant --</option>
+    @foreach (var tenant in Tenants)
+    {
+        <option value="@tenant.Id">@tenant.DisplayName</option>
+    }
+</InputSelect>
+
+<p class="mt-2 text-muted">Selected Tenant ID: @SelectedTenantId</p>
+
+@code {
+    [Parameter] public List<Tenant> Tenants { get; set; } = new();
+
+    [Parameter] public string SelectedTenantId { get; set; } = string.Empty;
+
+    [Parameter] public EventCallback<string> SelectedTenantIdChanged { get; set; }
+
+    private async Task HandleChange(ChangeEventArgs e)
+    {
+        if ((e is null)||(e.Value is null))
+        return;
+        if (e.Value.ToString() == string.Empty)
+            return;
+        SelectedTenantId = e.Value.ToString()??string.Empty;
+        await SelectedTenantIdChanged.InvokeAsync(SelectedTenantId);
+    }
+}
