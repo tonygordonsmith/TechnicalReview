@@ -1,15 +1,24 @@
 ﻿@page "/"
 @rendermode InteractiveServer
 @inject ICameraDataService CameraDataService
+@inject ICustomLogger Logger
+@using TechnicalInterView.Components.Pages
+@using TechnicalInterView.Tenants.Models
 
 <h1>Video Analytics Configuration</h1>
 
 <div class="container">
     <!-- Implement tenant dropdown and CameraGrid component -->
+<InputSelectorTenant 
+    Tenants="@TenantList"
+    SelectedTenantId="@CurrentTenantId"
+    SelectedTenantIdChanged="@OnTenantSelected" />
+
 </div>
 
-@code {
-    // Add logic to load tenant IDs from CameraDataService and pass selected TenantId to CameraGrid
-
-   
+@if (!string.IsNullOrEmpty(CurrentTenantId))
+{
+    <p class="alert alert-info mt-3">
+        Tenant <strong>@CurrentTenantId</strong> is currently selected.
+    </p>
 }
