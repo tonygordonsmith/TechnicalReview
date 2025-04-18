@@ -8,5 +8,6 @@ namespace TechnicalInterView.Services;
 public interface ICameraDataCache : ICameraDataService
 {
     public Task<CameraModel> GetCameraById(string cameraId);
+    public Task<List<CameraModel>> GetCamerasByTenantId(string tenantId);
 
 }

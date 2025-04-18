@@ -11,14 +11,9 @@
     <!-- Implement tenant dropdown and CameraGrid component -->
 <InputSelectorTenant 
     Tenants="@TenantList"
-    SelectedTenantId="@CurrentTenantId"
-    SelectedTenantIdChanged="@OnTenantSelected" />
-
+    @bind-Value="CurrentTenantId"/>
 </div>
+<CameraGrid 
+    TenantId="@CurrentTenantId"
+/>
 
-@if (!string.IsNullOrEmpty(CurrentTenantId))
-{
-    <p class="alert alert-info mt-3">
-        Tenant <strong>@CurrentTenantId</strong> is currently selected.
-    </p>
-}

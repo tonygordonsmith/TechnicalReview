@@ -1,23 +1,55 @@
 ﻿<!-- Components/Pages/CameraGrid.razor -->
 @rendermode InteractiveServer
 @using Microsoft.AspNetCore.SignalR.Client
-@inject ICameraDataService CameraDataService
+@using TechnicalInterView.Cameras.Models
+@using TechnicalInterView.Services
+@inject ICameraDataCache CameraDataCache
 @inject ICustomLogger Logger
 @inject HubConnection HubConnection
 
 <div class="container mt-4">
-    <!-- Implement search input and camera table (Name, UseCase, Status, Save) -->
+        <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Use Case</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var camera in Cameras)
+            {
+                <CameraComponent CameraModel="camera"/>
+            }
+        </tbody>
+    </table>
 </div>
 
 @code {
     [Parameter]
     public string TenantId { get; set; } = string.Empty;
 
-    // Add logic for:
-    // - Loading cameras by TenantId
-    // - Filtering cameras by name (search)
-    // - Updating status via SignalR with reconnect handling
-    // - Saving use case changes
-    // - Error handling (no cameras, SignalR errors)
-    // - Dispose
-}
+    public List<CameraModel> Cameras { get; set; } = new List<CameraModel>();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (TenantId != string.Empty)
+        {
+            await LoadCameras();
+            await base.OnParametersSetAsync();
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+    private async Task LoadCameras()
+    {
+        try
+        {
+            Cameras = await CameraDataCache.GetCamerasByTenantId(TenantId);
+        }
+        catch (Exception ex)
+        {
+            await Logger.LogErrorAsync("Error loading cameras","",ex);
+        }
+    }
+} 

@@ -2,20 +2,29 @@
 
 @if (asTableRow)
 {
-    <tr>
-        <td>@CameraModel.Name</td>
-        <td>@CameraModel.UseCase?string.Empty</td>
-        <td>
-            <button type="button" class="@GetStatusClass()">
-            @CameraModel.Status
-            </button>
-        </td>
-        <td>
-            <button type="submit">
-            Action
-            </button>
-        </td>
-    </tr>
+    @if (CameraModel is null)
+    {
+        <tr>
+            <td colspan="4" class="text-center">No camera data available</td>
+        </tr>
+    }
+    else
+    {
+        <tr>
+            <td>@CameraModel?.Name</td>
+            <td>@CameraModel?.UseCase</td>
+            <td>
+                <button type="button" class="@GetStatusClass()">
+                    @CameraModel?.Status
+                </button>
+            </td>
+            <td>
+                <button type="submit">
+                    Action
+                </button>
+            </td>
+        </tr>
+    }
 }
 else
 {
@@ -35,13 +44,25 @@ else
 [Parameter]
 public string? ParamCameraId { get; set; } = null!;
 
-public CameraModel CameraModel = new CameraModel();
+[Parameter]
+public CameraModel? CameraModel { get; set; } = new CameraModel();
 
 public bool asTableRow = true;
 
+protected override void OnParametersSet()
+{
+    if (CameraModel is not null)
+    {
+        ParamCameraId = CameraModel.CameraId;  
+    }
+}
 #region Css
 public string GetStatusClass()
 {
+    if (CameraModel is null)
+    {
+        return "btn btn-secondary";
+    }
     return CameraModel.Status switch
     {
         "Online" => "btn btn-success",

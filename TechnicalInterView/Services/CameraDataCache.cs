@@ -53,6 +53,26 @@ public class CameraDataCache : ICameraDataCache
         return cameras;
     }
 
+    public async Task<List<CameraModel>> GetCamerasByTenantId(string tenantId)
+    {
+        var cameras = await _cameraDataService.GetCamerasAsync();
+        var byTenantId = cameras.Where(c => c.TenantId == tenantId).ToList();
+        var cameraModels = new List<CameraModel>();
+        foreach (var camera in byTenantId)
+        {
+            var cameraModel = new CameraModel
+            {
+                CameraId = camera.CameraId,
+                Name = camera.Name,
+                Status = camera.Status,
+                UseCase = camera.UseCase,
+                TenantId = camera.TenantId
+            };
+            cameraModels.Add(cameraModel);
+        }
+        return cameraModels;
+    }
+
     public async Task<List<string>> GetTenantIdsAsync()
     {
         return await _cameraDataService.GetTenantIdsAsync();
