@@ -4,16 +4,19 @@
 @inject ICustomLogger Logger
 @using TechnicalInterView.Components.Pages
 @using TechnicalInterView.Tenants.Models
+<div class="container vh-100 overflow-y-hidden">
+    <h2>Tenant Cameras</h2>
+    <div class="container vh-20">
+    <InputSelectorTenant 
+        Tenants="@TenantList"
+        @bind-Value="CurrentTenantId"/>
+    </div>
+    <hr/>
+    <div class="container overflow-y-auto vh-80">
 
-<h1>Video Analytics Configuration</h1>
-
-<div class="container">
-    <!-- Implement tenant dropdown and CameraGrid component -->
-<InputSelectorTenant 
-    Tenants="@TenantList"
-    @bind-Value="CurrentTenantId"/>
+        <CameraGrid 
+            TenantId="@CurrentTenantId"/>
+    </div>
 </div>
-<CameraGrid 
-    TenantId="@CurrentTenantId"
-/>
+
 

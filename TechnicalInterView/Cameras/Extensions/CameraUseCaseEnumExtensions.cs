@@ -22,10 +22,10 @@ namespace TechnicalInterView.Cameras.Extensions
         {
             return useCaseString?.Trim().ToLowerInvariant() switch
             {
-                "fire detection" => CameraUseCaseEnum.FireDetection,
+                "firedetection" => CameraUseCaseEnum.FireDetection,
                 "overcrowding" or "over crowding" => CameraUseCaseEnum.OverCrowding,
-                "people counting" => CameraUseCaseEnum.PeopleCounting,
-                "unusual behaviour" => CameraUseCaseEnum.UnusualBehaviour,
+                "peoplecounting" => CameraUseCaseEnum.PeopleCounting,
+                "unusualbehavior" => CameraUseCaseEnum.UnusualBehaviour,
                 "unknown" or null => CameraUseCaseEnum.Unknown,
                 _ => throw new ArgumentException($"Cannot parse '{useCaseString}' to CameraUseCaseEnum")
             };
