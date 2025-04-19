@@ -29,47 +29,13 @@
 else
 {
     <div class="="d-flex justify-content-evenly">
-        @CameraModel.CameraId
-        @CameraModel.TenantId
-        @CameraModel.Name
-        @CameraModel.UseCase
+        @CameraModel.?CameraId
+        @CameraModel?.TenantId
+        @CameraModel?.Name
+        @CameraModel?.UseCase
         <button type="button" class="@GetStatusClass()">
-            @CameraModel.Status
+            @CameraModel?.Status
         </button>
     </div>
 
-}
-
-@code {
-[Parameter]
-public string? ParamCameraId { get; set; } = null!;
-
-[Parameter]
-public CameraModel? CameraModel { get; set; } = new CameraModel();
-
-public bool asTableRow = true;
-
-protected override void OnParametersSet()
-{
-    if (CameraModel is not null)
-    {
-        ParamCameraId = CameraModel.CameraId;  
-    }
-}
-#region Css
-public string GetStatusClass()
-{
-    if (CameraModel is null)
-    {
-        return "btn btn-secondary";
-    }
-    return CameraModel.Status switch
-    {
-        "Online" => "btn btn-success",
-        "Offline" => "btn btn-danger",
-        _ => "btn btn-secondary"
-    };
-}
-
-#endregion Css
 }

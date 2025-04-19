@@ -31,6 +31,28 @@ public class CameraModel
                     }
                 } }
     public CameraUseCaseEnum? UseCaseEnum { get; set;}
-    public string? Status { get; set; }
+    public string? Status { 
+        get => _status;
+         set {
+            if (string.IsNullOrEmpty(value))
+            {
+                _status = value;
+                return;
+            }
+            try
+            {
+                _status = value;
+                CameraStatusEnum = CameraStatusEnumExtensions.FromString(value);
+            }
+            catch (ArgumentException)
+            {
+                CameraStatusEnum = null;
+                _status = value;
+            }
+
+         }
+          }
+    private string? _status;
+    public CameraStatusEnum? CameraStatusEnum { get; set; } = null;
 
 }

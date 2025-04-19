@@ -27,6 +27,13 @@ builder.Services.AddScoped<HubConnection>(sp =>
 //
 builder.Services.AddScoped<ICameraDataCache, CameraDataCache>();
 //
+// Declare a Scoped Service for Registry Service
+// This Registry allows Blazor/Razor components to register callbacks
+// to be called when the status of a camera changes
+// The RegistryService is a singleton service that manages the connection to the SignalR hub
+// and the registration of callbacks.
+builder.Services.AddScoped<ComponentRegistryService>();
+//
 // Rather than use cascading parameters, we can use a filter object instance
 // scoped per user connection to the Asp.Net server
 builder.Services.AddScoped<CameraQueryFilter>();
