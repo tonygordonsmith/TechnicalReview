@@ -10,6 +10,8 @@
     }
     else
     {
+        if (Display)
+        {
         <tr>
             <td>@CameraModel?.Name</td>
             <td>@CameraModel?.UseCase</td>
@@ -24,6 +26,8 @@
                 </button>
             </td>
         </tr>
+
+        }
     }
 }
 else

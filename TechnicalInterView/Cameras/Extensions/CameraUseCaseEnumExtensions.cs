@@ -9,10 +9,10 @@ namespace TechnicalInterView.Cameras.Extensions
         {
             return useCase switch
             {
-                CameraUseCaseEnum.FireDetection => "Fire Detection",
-                CameraUseCaseEnum.OverCrowding => "Over Crowding",
-                CameraUseCaseEnum.PeopleCounting => "People Counting",
-                CameraUseCaseEnum.UnusualBehaviour => "Unusual Behaviour",
+                CameraUseCaseEnum.FireDetection => "FireDetection",
+                CameraUseCaseEnum.OverCrowding => "OverCrowding",
+                CameraUseCaseEnum.PeopleCounting => "PeopleCounting",
+                CameraUseCaseEnum.UnusualBehaviour => "UnusualBehaviour",
                 CameraUseCaseEnum.Unknown => "Unknown",
                 _ => throw new ArgumentException($"Invalid camera use case: {useCase}")
             };
@@ -24,8 +24,8 @@ namespace TechnicalInterView.Cameras.Extensions
             {
                 "firedetection" => CameraUseCaseEnum.FireDetection,
                 "overcrowding" or "over crowding" => CameraUseCaseEnum.OverCrowding,
-                "peoplecounting" => CameraUseCaseEnum.PeopleCounting,
-                "unusualbehavior" => CameraUseCaseEnum.UnusualBehaviour,
+                "peoplecounting" or "people counting" => CameraUseCaseEnum.PeopleCounting,
+                "unusualbehaviour" or "unusual behaviour" or "unusualbehavior" => CameraUseCaseEnum.UnusualBehaviour,
                 "unknown" or null => CameraUseCaseEnum.Unknown,
                 _ => throw new ArgumentException($"Cannot parse '{useCaseString}' to CameraUseCaseEnum")
             };

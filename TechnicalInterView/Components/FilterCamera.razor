@@ -1,0 +1,55 @@
+﻿@using TechnicalInterView.Cameras.Models
+@inject CameraQueryFilter CameraQueryFilter
+
+<EditForm Model="_cameraQueryFilter" OnValidSubmit="Submit" Formname="CameraFilter" class="row g-1">
+<div class="col">
+    <label >
+        Name:
+        <InputText @bind-Value="_cameraQueryFilter!.Name" class="form-control" placeholder="filter on name" />
+    </label>    
+</div>
+<div class="col">
+    <label >
+        Use Case:
+        <InputSelect @bind-Value="_cameraQueryFilter!.UseCase" class="form-control">
+            <option value="">--any Use Case--</option>
+            <option value="FireDetection">Fire Detection</option>
+            <option value="OverCrowding">Over Crowding</option>
+            <option value="PeopleCounting">People Counting</option>
+            <option value="UnusualBehavior">Unusual Behavior</option>
+        </InputSelect>
+    </label>    
+</div>
+<div class="col">
+    <label >
+        Status:
+        <InputSelect @bind-Value="_cameraQueryFilter!.Status" class="form-control">
+            <option value="">--any status--</option>
+            <option value="Offline">Offline</option>
+            <option value="Online">Online</option>
+        </InputSelect>
+    </label>    
+</div>
+<div class="col align-content-center">
+    <button type="submit" class="btn btn-primary">Filter</button>
+</div>
+
+
+</EditForm>
+
+@code {
+    [SupplyParameterFromForm]
+    private CameraQueryFilter? _cameraQueryFilter {get; set;}
+protected override void OnInitialized() =>_cameraQueryFilter ??=new();
+
+private void Submit()
+{
+    // The filter object has changed
+    // Observing objects should be notified.    
+    
+    CameraQueryFilter.Name = _cameraQueryFilter.Name;
+    CameraQueryFilter.Status = _cameraQueryFilter.Status;
+    CameraQueryFilter.UseCase = _cameraQueryFilter.UseCase;
+    CameraQueryFilter.OnFilterChange();
+}
+}

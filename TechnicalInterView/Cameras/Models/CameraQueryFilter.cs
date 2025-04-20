@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 
 namespace TechnicalInterView.Cameras.Models;
 /// <summary>
@@ -9,6 +10,7 @@ namespace TechnicalInterView.Cameras.Models;
 /// </summary>
 public class CameraQueryFilter : CameraModel
 {
+    public event EventHandler<EventArgs>? FilterChanged;
     public bool PassFilter(CameraModel camera)
     {
         if (CameraId != null && camera.CameraId != CameraId)
@@ -17,15 +19,24 @@ public class CameraQueryFilter : CameraModel
         if (TenantId != null && camera.TenantId != TenantId)
             return false;
             
-        if (Name != null && camera.Name != Name)
+        if (Name != null)
+            if (camera.Name is null)
+                return false;
+            else
+                if (!camera.Name.Contains(Name))
+                    return false;
+            
+        if (UseCase != null && UseCase != string.Empty && camera.UseCase != UseCase)
             return false;
             
-        if (UseCase != null && camera.UseCase != UseCase)
-            return false;
-            
-        if (Status != null && camera.Status != Status)
+        if (Status != null && Status != string.Empty && camera.Status != Status)
             return false;
             
         return true;
+    }
+    public  void OnFilterChange()
+    {
+        var args = new EventArgs();
+        FilterChanged?.Invoke(this,args);
     }
 }
